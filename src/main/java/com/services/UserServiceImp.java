@@ -5,10 +5,12 @@ import com.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImp implements UserService {
 
     @Autowired
@@ -38,8 +40,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void saveUser(String name, String lastName, String email, String password, long id) {
-        User user = new User(name, lastName, email, password);
+    public void saveUser(String name, String lastName, String email, int age, String password, long id) {
+        User user = new User(name, lastName, email, age, password);
         user.setRoles(roleService.addOrUpdateRole(id));
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

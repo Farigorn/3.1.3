@@ -1,6 +1,5 @@
 package com.model;
 
-import com.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +16,9 @@ public class User implements UserDetails {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "age")
+    private int age;
 
     @Column(name = "password")
     private String password;
@@ -35,24 +37,35 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String lastName, String email, String password) {
+    public User(String name, String lastName, String email, int age, String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.age  = age;
         this.password = password;
     }
 
-    public User(String name, String lastName, String email, Set<Role> roles) {
+    public User(String name, String lastName, String email, int age, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.age = age;
         this.roles = roles;
     }
 
-    public User(String name, String lastName, String email) {
+    public User(String name, String lastName, int age, String email) {
         this.name = name;
         this.lastName = lastName;
+        this.age = age;
         this.email = email;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public long getId() {

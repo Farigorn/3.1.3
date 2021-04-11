@@ -1,12 +1,14 @@
 package com.controllers;
 
+import com.model.User;
+import com.services.RoleService;
+import com.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.model.User;
-import com.services.RoleService;
-import com.services.UserService;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,32 +23,25 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String index(Model model) {
+    public String index(Model model, Principal principal) {
+        User user = userService.findByUserName(principal.getName());
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("user", user);
+        model.addAttribute("userRoles", user.getRoles());
+        model.addAttribute("roles", roleService.getAllRole());
+        model.addAttribute("newUser", new User());
         return "users";
     }
 
-    @GetMapping("/new")
-    public String ShowNewUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getAllRole());
-        return "new";
-    }
 
     @PostMapping()
-    public String addUser(@RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam String password, @RequestParam("roleId") Long roleId) {
-        userService.saveUser(name, lastName, email, password, roleId);
+    public String addUser(@RequestParam String name, @RequestParam String lastName, @RequestParam String email, @RequestParam int age, @RequestParam String password, @RequestParam("roleId") Long roleId) {
+        userService.saveUser(name, lastName, email, age, password, roleId);
         return "redirect:/admin";
     }
 
-    @GetMapping("{id}/edit")
-    public String ShowUpdateUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("roles", roleService.getAllRole());
-        return "/edit";
-    }
 
-    @PatchMapping("{id}/{id}")
+    @PatchMapping("{id}")
     public String updateUser(@ModelAttribute("user") User user, @RequestParam("roleId") Long roleId) {
         userService.updateUser(user, roleId);
         return "redirect:/admin";

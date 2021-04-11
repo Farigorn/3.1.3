@@ -4,12 +4,14 @@ import com.services.RoleService;
 import org.springframework.stereotype.Service;
 import com.dao.RoleDao;
 import com.model.Role;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class RoleServiceImp implements RoleService {
     private final RoleDao roleDao;
 

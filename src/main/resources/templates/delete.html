@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Удаление user</title>
 </head>
-<div class="modal fade" th:fragment="Edit" th:id="@{'edit' + ${person.getId()}}" tabindex="-1"
+<div class="modal fade" th:fragment="Delete" th:id="@{'delete' + ${person.getId()}}" tabindex="-1"
      role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit user</h5>
+                <h5 class="modal-title">Delete user</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body d-flex justify-content-center">
-                <form th:id="@{'update' + ${person.getId()}}" th:method="PATCH"
-                      th:action="@{admin/{id}(id=${person.id})}">
+                <form th:id="@{'del' + ${person.getId()}}"
+                      th:method="DELETE" th:action="@{admin/{id}(id=${person.getId()})}">
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center"
                                for="id">ID</label>
@@ -31,35 +32,30 @@
                         <label class="col-12 font-weight-bold text-center" for="name">First
                             name</label>
                         <input name="name" class="form-control" type="text" id="name"
-                               th:value="*{person.getName()}"/>
+                               th:value="*{person.getName()}" disabled/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center"
                                for="lastName">Last name</label>
                         <input name="lastName" class="form-control" type="text"
-                               id="lastName" th:value="*{person.getLastName()}"/>
+                               id="lastName" th:value="*{person.getLastName()}" disabled/>
                     </div>
                     <div class="form-group">
-                        <label class="col-12 font-weight-bold text-center" for="age">Age</label>
-                        <input name="email" class="form-control" type="text" id="age"
-                               th:value="*{person.getAge()}"/>
+                        <label class="col-12 font-weight-bold text-center"
+                               for="lastName">Age</label>
+                        <input name="age" class="form-control" type="text"
+                               id="age" th:value="*{person.getAge()}" disabled/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center" for="email">Email</label>
                         <input name="email" class="form-control" type="text" id="email"
-                               th:value="*{person.getEmail()}"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-12 font-weight-bold text-center"
-                               for="password">Password</label>
-                        <input name="password" class="form-control" type="text"
-                               id="password" th:value="*{person.getPassword()}"/>
+                               th:value="*{person.getEmail()}" disabled/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center" for="roleId">Role</label>
-                        <select name="roleId" id = roleId class="form-control">
+                        <select multiple size="2" name="roleId" id=roleId class="form-control" disabled>
                             <option
-                                    th:each="role : ${roles}"
+                                    th:each="role : ${person.getRoles}"
                                     th:value="${role.id}"
                                     th:if="${role.getName().startsWith('ROLE_')}"
                                     th:text="${role.getName().replaceFirst('ROLE_', ' ')}">
@@ -72,15 +68,21 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Close
                 </button>
-                <button type="submit" th:attr="form=@{'update' + ${person.getId()}}"
-                        class="btn btn-primary">Edit
+                <button type="submit" th:attr="form=@{'del' + ${person.getId()}}"
+                        class="btn btn-primary">Delete
                 </button>
             </div>
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
