@@ -40,17 +40,15 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void saveUser(String name, String lastName, String email, int age, String password, long id) {
-        User user = new User(name, lastName, email, age, password);
-        user.setRoles(roleService.addOrUpdateRole(id));
+    public User saveUser(User user) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.saveUser(user);
+        return user;
     }
 
     @Override
-    public User updateUser(User user, long id) {
-        user.setRoles(roleService.addOrUpdateRole(id));
+    public User updateUser(User user) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userDao.updateUser(user);

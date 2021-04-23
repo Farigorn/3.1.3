@@ -15,51 +15,44 @@
                 <h5 class="title mb-2 mt-2 ml-3">Add new user</h5>
             </div>
             <div class="d-flex justify-content-center border-top bg-white">
-                <form class="mt-3" id="add" th:method="POST" th:action="@{/admin}">
+                <form class="mt-3" id="add"  action="#">
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center" for="name">First
                             name</label>
-                        <input required class="form-control" type="text" id="name"
-                               th:field="*{newUser.name}" style="background: #ff9"/>
+                        <input class="form-control" type="text" id="name"
+                               style="background: #ff9"/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center"
                                for="lastName">Last name</label>
-                        <input class="form-control" type="text"
-                               id="lastName" th:field="*{newUser.lastName}" style="background: #ff9"/>
+                        <input class="form-control" type="text" id="lastName" style="background: #ff9"/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center" for="age">Age</label>
-                        <input required class="form-control" type="text" id="age"
-                               th:field="*{newUser.age}"/>
+                        <input required class="form-control" type="text" id="age"/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center" for="email">Email</label>
-                        <input required class="form-control" type="text" id="email"
-                               th:field="*{newUser.email}" style="background: #ff9"/>
+                        <input required class="form-control" type="text" id="email" style="background: #ff9"/>
                     </div>
                     <div class="form-group">
                         <label class="col-12 font-weight-bold text-center"
                                for="password">Password</label>
-                        <input required class="form-control" type="password"
-                               id="password" th:field="*{newUser.password}"/>
+                        <input required class="form-control" type="password" id="password"/>
                     </div>
                     <div class="form-group">
-                        <label class="col-12 font-weight-bold text-center" for="roleId">Role</label>
+                        <label class="col-12 font-weight-bold text-center"
+                               for="roleId">Role</label>
                         <select name="roleId" id=roleId class="form-control">
-                            <option
-                                    th:each="role : ${roles}"
-                                    th:value="${role.id}"
-                                    th:if="${role.getName().startsWith('ROLE_')}"
-                                    th:text="${role.getName().replaceFirst('ROLE_', ' ')}">
-                            </option>
+                            <option name="ROLE_ADMIN" value="1" selected="selected">ADMIN</option>
+                            <option name="ROLE_USER" value="2">USER</option>
                         </select>
                     </div>
                 </form>
             </div>
             <div class="d-flex border-bottom justify-content-center bg-white mb-5">
                 <button type="submit" form="add"
-                        class="btn btn-success mb-3">Add new user
+                        class="btn addBtn btn-success mb-3">Add new user
                 </button>
             </div>
         </div>

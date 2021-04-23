@@ -46,4 +46,6 @@ public class UserDaoImp implements UserDao {
                 "SELECT u from User u WHERE u.name = :username", User.class).
                 setParameter("username", UserName).getSingleResult();
     }
+
+
 }
